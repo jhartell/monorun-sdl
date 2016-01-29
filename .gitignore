@@ -1,0 +1,18 @@
+# Build files
+/Makefile
+/Makefile.in
+/aclocal.m4
+/autom4te.cache/
+/compile
+/config.*
+/configure
+/depcomp
+/install-sh
+/missing
+.deps/
+/src/Makefile
+/src/Makefile.in
+/src/monorun
+/src/*.o
+/stamp-h1
+/monorun
