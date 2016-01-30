@@ -16,6 +16,8 @@ make install
 
 ## Todo ##
 - Implement start and end screens
+- Make `make install` work properly with graphics
+- Images are currently loaded from the working dir, support installed paths
 - Fullscreen support
 - Draw thicker lines between Rolands
 - Implement highscore (?)
