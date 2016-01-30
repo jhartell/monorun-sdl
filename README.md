@@ -16,6 +16,7 @@ make install
 
 ## Todo ##
 - Implement start and end screens
+- Fullscreen support
 - Draw thicker lines between Rolands
 - Implement highscore (?)
 - Cross platform support
