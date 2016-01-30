@@ -192,24 +192,31 @@ void RolandAnimate(Roland *roland)
 	//printf("dt: %f\n", dt);
 	
 	
-	// Add velocity vector to position
-	roland->position = VectorAdd(roland->position, VectorScale(roland->velocity, dt));
-	//printf("Pos: %f %f\n", roland->position.x, roland->position.y);
-	
-	// Add deceleration
+
+	// Check if we should accelerate or decelerate
 	moveDistance = VectorLength(roland->target);
 	distanceLeft = VectorLength(VectorSub(roland->end, roland->position));
 	//printf("%f %f\n", moveDistance, distanceLeft);
 	
+	Vector oldVel = roland->velocity;
+
+	// Decelerate
 	if(distanceLeft < (moveDistance/2)) {
-		// Decelerate
 		Vector d = VectorFlip(roland->acceleration);
 		roland->velocity = VectorAdd(roland->velocity, VectorScale(d, dt));
+	// Accelerate
 	} else {
-		// Add acceleration to velocity
 		roland->velocity = VectorAdd(roland->velocity, VectorScale(roland->acceleration, dt));
 	}
 	
+	// Add velocity by velocity verlet integration
+	Vector v;
+	v = VectorAdd(roland->velocity, oldVel);
+	v = VectorScale(v, 0.5);
+	v = VectorScale(v, dt);
+	roland->position = VectorAdd(roland->position, v);
+	//printf("Pos: %f %f\n", roland->position.x, roland->position.y);
+
 	// Check overshoot
 	if(VectorDot(roland->target, roland->velocity) < 0) {
 		roland->isMoving = 0;
