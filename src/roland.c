@@ -88,8 +88,8 @@ void RolandSpawn()
 	// Set position
 	r->position = VectorInit(-(r->radius/2), -(r->radius/2));
 
-	// Randomize speed
-	r->speed = ((rand()%100)+20);
+	// Randomize speed (used as acceleration in units per second)
+	r->speed = ((rand()%800)+100);
 
 	//printf("Roland Spawn %ld, Large: %d, Speed: %f, Total: %d\n", rolandLastSpawnTime, r->isLarge, r->speed, GetRolandCount());
 }
@@ -186,13 +186,14 @@ void RolandAnimate(Roland *roland)
 		return;
 	}
 
-	// Calculate dt
-	dt = SDL_GetTicks() - roland->lastUpdate;
+	// Calculate dt in seconds
+	dt = (float)(SDL_GetTicks() - roland->lastUpdate) / 1000;
 	roland->lastUpdate = SDL_GetTicks();
+	//printf("dt: %f\n", dt);
 	
 	
 	// Add velocity vector to position
-	roland->position = VectorAdd(roland->position, roland->velocity);
+	roland->position = VectorAdd(roland->position, VectorScale(roland->velocity, dt));
 	//printf("Pos: %f %f\n", roland->position.x, roland->position.y);
 	
 	// Add deceleration
@@ -203,10 +204,10 @@ void RolandAnimate(Roland *roland)
 	if(distanceLeft < (moveDistance/2)) {
 		// Decelerate
 		Vector d = VectorFlip(roland->acceleration);
-		roland->velocity = VectorAdd(roland->velocity, d);
+		roland->velocity = VectorAdd(roland->velocity, VectorScale(d, dt));
 	} else {
 		// Add acceleration to velocity
-		roland->velocity = VectorAdd(roland->velocity, roland->acceleration);
+		roland->velocity = VectorAdd(roland->velocity, VectorScale(roland->acceleration, dt));
 	}
 	
 	// Check overshoot
@@ -229,12 +230,13 @@ void RolandMoveTo(Roland *roland, unsigned int x, unsigned int y)
 	roland->velocity = VectorInit(0, 0);
 	
 	// Normalize target vector and scale by speed
-	roland->acceleration = VectorScale(VectorNorm(roland->target), roland->speed/1000);
+	// acceleration in units per second
+	roland->acceleration = VectorScale(VectorNorm(roland->target), roland->speed);
 	
-	/*printf("Start position: %f %f\n", roland->position.x, roland->position.y);
-	printf("End pos: %f %f\n", roland->end.x, roland->end.y);
-	printf("Target vect: %f %f\n", roland->target.x, roland->target.y);
-	printf("Acceleration: %f %f\n", roland->acceleration.x, roland->acceleration.y);*/
+	//printf("Start position: %f %f\n", roland->position.x, roland->position.y);
+	//printf("End pos: %f %f\n", roland->end.x, roland->end.y);
+	//printf("Target vect: %f %f\n", roland->target.x, roland->target.y);
+	//printf("Acceleration: %f - %f %f (%f)\n", roland->speed, roland->acceleration.x, roland->acceleration.y, VectorLength(roland->acceleration));
 }
 
 
