@@ -17,6 +17,7 @@ AC_PROG_LN_S
 PKG_CHECK_MODULES([SDL2],[sdl2])
 AC_CHECK_LIB([SDL2],[SDL_Init], [], [AC_MSG_ERROR([libSDL2 not found])])
 AC_CHECK_LIB([SDL2_image],[IMG_Init], [], [AC_MSG_ERROR([libSDL2_image not found])])
+AC_CHECK_LIB([SDL2_ttf],[TTF_Init], [], [AC_MSG_ERROR([libSDL2_ttf not found])])
 AC_CHECK_LIB([m], [main])
 
 # Checks for header files.
