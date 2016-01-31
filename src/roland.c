@@ -133,13 +133,12 @@ void RolandTerminate(Roland *roland)
 */
 void RolandTerminateAll()
 {
-	Roland *p = rolandList;
 	Roland *n;
 
-	while(p != NULL) {
-		n = p->next;
-		free(p);
-		p = n;
+	while(rolandList != NULL) {
+		n = rolandList;
+		rolandList = rolandList->next;
+		free(n);
 	}
 }
 
