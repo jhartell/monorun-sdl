@@ -1,14 +1,18 @@
 language: c
 
-sudo: required
-
 compiler:
   - gcc
 
-before_install:
-  - sudo apt-get -qq update
-  - sudo apt-get install -y autoconf automake
-  - sudo apt-get install -y libsdl2-dev libsdl2-image-dev libsdl2-ttf-dev
+addons:
+  apt:
+    sources:
+    - ubuntu-toolchain-r-test
+    packages:
+    - autoconf
+    - automake
+    - libsdl2-dev
+    - libsdl2-image-dev
+    - libsdl2-ttf-dev
 
 script:
   - ./autogen.sh
