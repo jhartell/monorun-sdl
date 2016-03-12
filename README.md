@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/jhartell/monorun-sdl.svg?branch=master)](https://travis-ci.org/jhartell/monorun-sdl)
+
 # Monorun-sdl #
 An SDL game based on the Javascript game [Monorun!](https://github.com/beije/monorun) by Benjamin Horn.
 
