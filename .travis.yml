@@ -1,0 +1,12 @@
+language: c
+
+compiler:
+  - gcc
+
+before_install:
+  - bash build/travis-ci/install-deps.sh
+
+script:
+  - ./autogen.sh
+  - ./configure
+  - make
