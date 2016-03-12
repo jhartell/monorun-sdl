@@ -6,7 +6,9 @@ compiler:
   - gcc
 
 before_install:
-  - bash build/travis-ci/install-deps.sh
+  - sudo apt-get -qq update
+  - sudo apt-get install -y autoconf automake
+  - sudo apt-get install -y libsdl2-dev libsdl2-image-dev libsdl2-ttf-dev
 
 script:
   - ./autogen.sh
